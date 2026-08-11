@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>خليل</title>
+
+<!-- استيراد خطوط احترافية لأسماء التطبيقات بالإنجليزية -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
 <style>
   :root{
     --text: #0f172a;
@@ -27,7 +33,7 @@
     background-color: #f8fafc;
   }
 
-  /* --- التأثير الثالث: خلفية البقع الملونة العائمة (Pastel Ambient Orbs) --- */
+  /* --- خلفية البقع الملونة العائمة --- */
   .ambient-bg {
     position: fixed;
     top: 0;
@@ -47,7 +53,6 @@
     animation: floatOrb 12s infinite alternate ease-in-out;
   }
 
-  /* بقعة أرجوانية أعلى اليمين */
   .orb-1 {
     width: 280px;
     height: 280px;
@@ -57,7 +62,6 @@
     animation-duration: 14s;
   }
 
-  /* بقعة سماوية أسفل اليسار */
   .orb-2 {
     width: 320px;
     height: 320px;
@@ -67,7 +71,6 @@
     animation-duration: 18s;
   }
 
-  /* بقعة وردية ناعمة بالمنتصف */
   .orb-3 {
     width: 220px;
     height: 220px;
@@ -82,7 +85,7 @@
     100% { transform: translate(35px, 45px) scale(1.12); }
   }
 
-  /* --- الكارت الرئيسي (تصميم زجاجي شفاف ومبسط) --- */
+  /* --- الكارت الرئيسي --- */
   .card{
     width: 100%;
     max-width: 380px;
@@ -98,7 +101,7 @@
     box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05);
   }
 
-  /* --- التأثير الثاني: انيميشن دخول العناصر بالدور (Staggered Entrance) --- */
+  /* --- حركة دخول العناصر عند الفتح --- */
   .animate-item {
     opacity: 0;
     animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -115,14 +118,9 @@
     }
   }
 
-  /* توقيت التتابع */
   .avatar { animation-delay: 0.1s; }
   h1 { animation-delay: 0.2s; }
   .bio { animation-delay: 0.28s; }
-  .link:nth-child(1) { animation-delay: 0.38s; }
-  .link:nth-child(2) { animation-delay: 0.48s; }
-  .link:nth-child(3) { animation-delay: 0.58s; }
-  .link:nth-child(4) { animation-delay: 0.68s; }
   footer { animation-delay: 0.78s; }
 
   .avatar{
@@ -161,56 +159,173 @@
     margin-top: 28px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
   }
 
-  /* --- تصميم الكبسات للتلفون (Touch Responsive) --- */
+  /* --- تصميم الكبسات والتأثير الطيفي الفاتح + التطاير العائم --- */
   .link{
     display: flex;
     align-items: center;
     gap: 14px;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid color-mix(in srgb, var(--brand) 25%, #e2e8f0);
+
+    /* لون طيفي فاتح مكس بلون التطبيق داخل الفراغ */
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      color-mix(in srgb, var(--brand) 18%, #ffffff) 35%,
+      color-mix(in srgb, var(--brand) 32%, #ffffff) 65%,
+      rgba(255, 255, 255, 0.95) 100%
+    );
+    background-size: 200% 200%;
+    border: 1px solid color-mix(in srgb, var(--brand) 30%, #cbd5e1);
     border-radius: 16px;
-    padding: 14px 18px;
+    padding: 12px 18px;
     text-decoration: none;
     color: var(--text);
-    font-size: 14.5px;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease;
+    box-shadow: 0 4px 15px color-mix(in srgb, var(--brand) 12%, transparent);
+
+    /* دمج حركة الدخول مع حركة التطاير الخفيف والطيف المتحرك */
+    animation: 
+      fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+      floatButton 3.8s ease-in-out infinite alternate,
+      buttonSpectrum 6s ease infinite alternate;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  /* توقيت التتابع للدخول والتطاير لتطوف الكبسات بشكل متناسق */
+  .link:nth-child(1) { animation-delay: 0.38s, 0.8s, 0s; }
+  .link:nth-child(2) { animation-delay: 0.48s, 1.4s, 0s; }
+  .link:nth-child(3) { animation-delay: 0.58s, 2.0s, 0s; }
+  .link:nth-child(4) { animation-delay: 0.68s, 2.6s, 0s; }
+
+  /* انيميشن التطاير للأعلى والأسفل بشكل خفيف */
+  @keyframes floatButton {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
+  }
+
+  /* انيميشن تموج الطيف الفاتح داخل الكبسة */
+  @keyframes buttonSpectrum {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
   }
 
   .link:hover{
-    transform: translateY(-2px);
-    background: #ffffff;
-    box-shadow: 0 8px 20px color-mix(in srgb, var(--brand) 18%, transparent);
+    border-color: var(--brand);
+    box-shadow: 0 8px 22px color-mix(in srgb, var(--brand) 25%, transparent);
   }
 
-  /* استجابة سلسة للمس على شاشة التلفون */
   .link:active{
-    transform: scale(0.96);
-    background: color-mix(in srgb, var(--brand) 10%, #ffffff);
-    box-shadow: 0 2px 8px color-mix(in srgb, var(--brand) 25%, transparent);
+    transform: scale(0.96) !important;
+    background: color-mix(in srgb, var(--brand) 20%, #ffffff);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--brand) 30%, transparent);
   }
 
+  /* الأيقونة والتأثير الطيفي الخاص بها */
   .icon-wrap{
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background: color-mix(in srgb, var(--brand) 12%, #ffffff);
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    transition: background 0.2s ease;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--brand) 40%, #ffffff),
+      var(--brand),
+      color-mix(in srgb, var(--brand) 65%, #000000),
+      color-mix(in srgb, var(--brand) 80%, #ffffff),
+      var(--brand)
+    );
+    background-size: 300% 300%;
+    animation: spectrumFlow 3.5s ease infinite;
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--brand) 35%, transparent);
+    border: 1.5px solid color-mix(in srgb, var(--brand) 40%, #ffffff);
+  }
+
+  .icon-wrap::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 35%,
+      rgba(255, 255, 255, 0.65) 50%,
+      transparent 65%
+    );
+    animation: shineSweep 2.8s infinite ease-in-out;
+  }
+
+  @keyframes spectrumFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes shineSweep {
+    0% { transform: translateX(-120%) translateY(-120%) rotate(25deg); }
+    100% { transform: translateX(120%) translateY(120%) rotate(25deg); }
   }
 
   .icon-wrap svg{
     width: 18px;
     height: 18px;
-    stroke: var(--brand);
+    stroke: #ffffff;
     fill: none;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+  }
+
+  /* --- تنسيقات النصوص والخطوط --- */
+  .link-text {
+    direction: ltr;
+    display: inline-block;
+  }
+
+  /* خط انستغرام المائل الملون */
+  .font-insta {
+    font-family: 'Grand Hotel', cursive;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* خط سناب شات */
+  .font-snap {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    color: #1e293b;
+  }
+
+  /* خط ثريدز */
+  .font-threads {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    color: #0f172a;
+  }
+
+  /* خط VSCO */
+  .font-vsco {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    color: #334155;
   }
 
   footer{
@@ -253,35 +368,35 @@
     <div class="links">
 
       <!-- انستغرام -->
-      <a class="link animate-item" href="https://instagram.com/khalil_aldraweesh" target="_blank" style="--brand:#c23fc9">
+      <a class="link" href="https://instagram.com/khalil_aldraweesh" target="_blank" style="--brand:#c23fc9">
         <span class="icon-wrap">
           <svg viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1"/></svg>
         </span>
-        انستغرام
+        <span class="link-text font-insta">Instagram</span>
       </a>
 
       <!-- سناب شات -->
-      <a class="link animate-item" href="https://www.snapchat.com/add/khalil_aldrawee?share_id=Z9p--nUv0vs&locale=ar-JO" target="_blank" style="--brand:#d9b200">
+      <a class="link" href="https://www.snapchat.com/add/khalil_aldrawee?share_id=Z9p--nUv0vs&locale=ar-JO" target="_blank" style="--brand:#d9b200">
         <span class="icon-wrap">
           <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 4c2.6 0 4.5 2 4.5 4.6 0 1.1-.1 2.1-.3 3 .8.5 1.8.7 1.8 1.4 0 .5-.6.8-1.4 1.1-.3.1-.5.4-.4.7.2.7.6 1.4 1.4 1.7.3.1.2.6-.1.6-.6.1-1 .2-1.2.4-.2.2-.1.7-.5 1-.5.4-1.6-.1-2.5.2-.7.3-1.2 1-2.3 1s-1.6-.7-2.3-1c-.9-.3-2 .2-2.5-.2-.4-.3-.3-.8-.5-1-.2-.2-.6-.3-1.2-.4-.3 0-.4-.5-.1-.6.8-.3 1.2-1 1.4-1.7.1-.3-.1-.6-.4-.7-.8-.3-1.4-.6-1.4-1.1 0-.7 1-.9 1.8-1.4-.2-.9-.3-1.9-.3-3C7.5 6 9.4 4 12 4z"/></svg>
         </span>
-        سناب شات
+        <span class="link-text font-snap">Snapchat</span>
       </a>
 
       <!-- ثريدز -->
-      <a class="link animate-item" href="https://threads.net/@username" target="_blank" style="--brand:#1e293b">
+      <a class="link" href="https://threads.net/@username" target="_blank" style="--brand:#1e293b">
         <span class="icon-wrap">
           <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 3c-4 0-6 2.6-6 6.5V14c0 4 2.3 7 6.3 7 3.4 0 5.2-1.8 5.6-4"/><path d="M9.5 11c0-2 1.3-3 3-3s3 1.2 3 3.2c0 3-2 3.6-3.8 3.6-1.6 0-2.7-.9-2.7-2.2 0-1.5 1.4-2.1 3-2.1 1.1 0 2.2.3 3 .8"/></svg>
         </span>
-        ثريدز
+        <span class="link-text font-threads">Threads</span>
       </a>
 
       <!-- VSCO -->
-      <a class="link animate-item" href="https://vsco.co/khalilaldraweesh" target="_blank" style="--brand:#334155">
+      <a class="link" href="https://vsco.co/khalilaldraweesh" target="_blank" style="--brand:#334155">
         <span class="icon-wrap">
           <svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.3"/></svg>
         </span>
-        VSCO
+        <span class="link-text font-vsco">VSCO</span>
       </a>
 
     </div>
