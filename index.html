@@ -11,111 +11,157 @@
 <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
-  :root{
+  :root {
     --text: #0f172a;
-    --muted: #64748b;
-    --card: rgba(255, 255, 255, 0.75);
-    --border: rgba(255, 255, 255, 0.8);
+    --muted: #e2e8f0;
+    --card: rgba(255, 255, 255, 0.1);
+    --border: rgba(255, 255, 255, 0.2);
+    --brand: #ffffff;
   }
 
-  *{ box-sizing: border-box; margin:0; padding:0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body{
+  body {
     min-height: 100vh;
-    color: var(--text);
+    color: #ffffff;
     font-family: 'Segoe UI', Tahoma, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 32px 16px;
     position: relative;
-    overflow-x: hidden;
-    background-color: #f8fafc;
-  }
-
-  /* --- خلفية البقع الملونة العائمة --- */
-  .ambient-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
     overflow: hidden;
+    background: linear-gradient(to top, #000000 0%, #030d22 45%, #09204f 100%);
   }
 
-  .orb {
-    position: absolute;
+  .layout-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    z-index: 1;
+    flex-wrap: wrap; 
+  }
+
+  /* --- القمر مع التضاريس الواقعية --- */
+  .moon-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 300px;
+    padding: 20px;
+  }
+
+  .moon {
+    width: 30vw;
+    max-width: 380px;
+    min-width: 200px;
+    aspect-ratio: 1;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.55;
-    animation: floatOrb 12s infinite alternate ease-in-out;
-  }
-
-  .orb-1 {
-    width: 280px;
-    height: 280px;
-    background: #c084fc;
-    top: -40px;
-    right: -40px;
-    animation-duration: 14s;
-  }
-
-  .orb-2 {
-    width: 320px;
-    height: 320px;
-    background: #38bdf8;
-    bottom: -60px;
-    left: -60px;
-    animation-duration: 18s;
-  }
-
-  .orb-3 {
-    width: 220px;
-    height: 220px;
-    background: #f472b6;
-    top: 40%;
-    left: 20%;
-    animation-duration: 10s;
-  }
-
-  @keyframes floatOrb {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(35px, 45px) scale(1.12); }
+    /* استخدام تداخل الألوان لعمل فوهات وتضاريس */
+    background: 
+      radial-gradient(circle at 25% 35%, rgba(0, 0, 0, 0.15) 2%, transparent 8%),
+      radial-gradient(circle at 75% 65%, rgba(0, 0, 0, 0.12) 4%, transparent 12%),
+      radial-gradient(circle at 45% 80%, rgba(0, 0, 0, 0.1) 6%, transparent 15%),
+      radial-gradient(circle at 85% 35%, rgba(0, 0, 0, 0.18) 5%, transparent 18%),
+      radial-gradient(circle at 60% 25%, rgba(0, 0, 0, 0.08) 8%, transparent 22%),
+      radial-gradient(circle at 35% 70%, rgba(0, 0, 0, 0.14) 7%, transparent 25%),
+      radial-gradient(circle at 30% 30%, #ffffff 0%, #e2e8f0 55%, #94a3b8 100%);
+    box-shadow: 
+      0 0 70px 15px rgba(255, 255, 255, 0.25), /* الوهج الخارجي */
+      inset -25px -25px 45px rgba(0, 0, 0, 0.65), /* ظل العتمة على الطرف */
+      inset 10px 10px 25px rgba(255, 255, 255, 0.9); /* لمعة الضوء المقابلة */
   }
 
   /* --- الكارت الرئيسي --- */
-  .card{
+  .card-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 300px;
+    padding: 20px;
+  }
+
+  .card {
     width: 100%;
     max-width: 380px;
     text-align: center;
-    position: relative;
-    z-index: 1;
     background: var(--card);
     padding: 32px 22px;
     border-radius: 28px;
     border: 1px solid var(--border);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   }
 
-  /* --- حركة دخول العناصر عند الفتح --- */
+  /* --- تأثير تساقط الثلج المكثف --- */
+  .snow-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .snowflake {
+    position: absolute;
+    top: -20px;
+    background: #ffffff;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: snowfall linear infinite;
+  }
+
+  /* توليد عدد كبير من الثلج بأحجام وسرعات مختلفة */
+  .snow-1 { left: 5%; width: 6px; height: 6px; animation-duration: 6s; animation-delay: 0s; }
+  .snow-2 { left: 12%; width: 8px; height: 8px; animation-duration: 7.5s; animation-delay: 2s; }
+  .snow-3 { left: 18%; width: 5px; height: 5px; animation-duration: 5.5s; animation-delay: 1s; }
+  .snow-4 { left: 24%; width: 9px; height: 9px; animation-duration: 8s; animation-delay: 3s; }
+  .snow-5 { left: 30%; width: 7px; height: 7px; animation-duration: 6.5s; animation-delay: 0.5s; }
+  .snow-6 { left: 38%; width: 6px; height: 6px; animation-duration: 7s; animation-delay: 4s; }
+  .snow-7 { left: 45%; width: 8px; height: 8px; animation-duration: 8.5s; animation-delay: 1.5s; }
+  .snow-8 { left: 52%; width: 5px; height: 5px; animation-duration: 5s; animation-delay: 2.5s; }
+  .snow-9 { left: 58%; width: 7px; height: 7px; animation-duration: 6.8s; animation-delay: 3.5s; }
+  .snow-10 { left: 65%; width: 6px; height: 6px; animation-duration: 7.2s; animation-delay: 0.2s; }
+  .snow-11 { left: 72%; width: 8px; height: 8px; animation-duration: 6.2s; animation-delay: 1.2s; }
+  .snow-12 { left: 78%; width: 5px; height: 5px; animation-duration: 5.8s; animation-delay: 2.8s; }
+  .snow-13 { left: 85%; width: 9px; height: 9px; animation-duration: 7.8s; animation-delay: 0.8s; }
+  .snow-14 { left: 92%; width: 7px; height: 7px; animation-duration: 8.2s; animation-delay: 3.2s; }
+  .snow-15 { left: 97%; width: 6px; height: 6px; animation-duration: 6.7s; animation-delay: 1.7s; }
+  .snow-16 { left: 8%; width: 4px; height: 4px; animation-duration: 5.2s; animation-delay: 4.5s; }
+  .snow-17 { left: 22%; width: 10px; height: 10px; animation-duration: 9s; animation-delay: 0.3s; }
+  .snow-18 { left: 35%; width: 5px; height: 5px; animation-duration: 6.1s; animation-delay: 2.1s; }
+  .snow-19 { left: 48%; width: 7px; height: 7px; animation-duration: 7.4s; animation-delay: 3.8s; }
+  .snow-20 { left: 62%; width: 6px; height: 6px; animation-duration: 5.9s; animation-delay: 1.4s; }
+  .snow-21 { left: 75%; width: 8px; height: 8px; animation-duration: 8.1s; animation-delay: 4.2s; }
+  .snow-22 { left: 88%; width: 5px; height: 5px; animation-duration: 6.3s; animation-delay: 0.7s; }
+  .snow-23 { left: 15%; width: 7px; height: 7px; animation-duration: 7.6s; animation-delay: 2.4s; }
+  .snow-24 { left: 82%; width: 6px; height: 6px; animation-duration: 6.9s; animation-delay: 3.1s; }
+  .snow-25 { left: 42%; width: 9px; height: 9px; animation-duration: 8.4s; animation-delay: 1.9s; }
+
+  @keyframes snowfall {
+    0% { transform: translateY(-10vh) translateX(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 0.8; }
+    100% { transform: translateY(110vh) translateX(40px); opacity: 0; }
+  }
+
+  /* --- حركات الكارد --- */
   .animate-item {
     opacity: 0;
     animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   @keyframes fadeSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(24px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .avatar { animation-delay: 0.1s; }
@@ -123,7 +169,7 @@
   .bio { animation-delay: 0.28s; }
   footer { animation-delay: 0.78s; }
 
-  .avatar{
+  .avatar {
     width: 112px;
     height: 112px;
     border-radius: 50%;
@@ -134,41 +180,40 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   }
 
-  .avatar img{
+  .avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  h1{
+  h1 {
     font-size: 23px;
     font-weight: 700;
     letter-spacing: .3px;
+    color: #ffffff;
   }
 
-  .bio{
+  .bio {
     color: var(--muted);
     font-size: 14px;
     margin-top: 6px;
   }
 
-  .links{
+  .links {
     margin-top: 28px;
     display: flex;
     flex-direction: column;
     gap: 14px;
   }
 
-  /* --- تصميم الكبسات والتأثير الطيفي الفاتح + التطاير العائم --- */
-  .link{
+  /* --- الأزرار والتأثيرات --- */
+  .link {
     display: flex;
     align-items: center;
     gap: 14px;
-
-    /* لون طيفي فاتح مكس بلون التطبيق داخل الفراغ */
     background: linear-gradient(
       120deg,
       rgba(255, 255, 255, 0.92) 0%,
@@ -183,47 +228,40 @@
     text-decoration: none;
     color: var(--text);
     box-shadow: 0 4px 15px color-mix(in srgb, var(--brand) 12%, transparent);
-
-    /* دمج حركة الدخول مع حركة التطاير الخفيف والطيف المتحرك */
     animation: 
       fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-      floatButton 3.8s ease-in-out infinite alternate,
-      buttonSpectrum 6s ease infinite alternate;
-
+      floatButtonFast 1.6s ease-in-out infinite alternate,
+      buttonSpectrum 3.5s ease infinite alternate;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
 
-  /* توقيت التتابع للدخول والتطاير لتطوف الكبسات بشكل متناسق */
-  .link:nth-child(1) { animation-delay: 0.38s, 0.8s, 0s; }
-  .link:nth-child(2) { animation-delay: 0.48s, 1.4s, 0s; }
-  .link:nth-child(3) { animation-delay: 0.58s, 2.0s, 0s; }
-  .link:nth-child(4) { animation-delay: 0.68s, 2.6s, 0s; }
+  .link:nth-child(1) { animation-delay: 0.38s, 0.1s, 0s; }
+  .link:nth-child(2) { animation-delay: 0.48s, 0.4s, 0s; }
+  .link:nth-child(3) { animation-delay: 0.58s, 0.7s, 0s; }
+  .link:nth-child(4) { animation-delay: 0.68s, 1.0s, 0s; }
 
-  /* انيميشن التطاير للأعلى والأسفل بشكل خفيف */
-  @keyframes floatButton {
+  @keyframes floatButtonFast {
     0% { transform: translateY(0); }
-    100% { transform: translateY(-5px); }
+    100% { transform: translateY(-10px); }
   }
 
-  /* انيميشن تموج الطيف الفاتح داخل الكبسة */
   @keyframes buttonSpectrum {
     0% { background-position: 0% 50%; }
     100% { background-position: 100% 50%; }
   }
 
-  .link:hover{
+  .link:hover {
     border-color: var(--brand);
     box-shadow: 0 8px 22px color-mix(in srgb, var(--brand) 25%, transparent);
   }
 
-  .link:active{
+  .link:active {
     transform: scale(0.96) !important;
     background: color-mix(in srgb, var(--brand) 20%, #ffffff);
     box-shadow: 0 2px 8px color-mix(in srgb, var(--brand) 30%, transparent);
   }
 
-  /* الأيقونة والتأثير الطيفي الخاص بها */
-  .icon-wrap{
+  .icon-wrap {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -274,7 +312,7 @@
     100% { transform: translateX(120%) translateY(120%) rotate(25deg); }
   }
 
-  .icon-wrap svg{
+  .icon-wrap svg {
     width: 18px;
     height: 18px;
     stroke: #ffffff;
@@ -284,13 +322,11 @@
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
   }
 
-  /* --- تنسيقات النصوص والخطوط --- */
   .link-text {
     direction: ltr;
     display: inline-block;
   }
 
-  /* خط انستغرام المائل الملون */
   .font-insta {
     font-family: 'Grand Hotel', cursive;
     font-size: 24px;
@@ -301,7 +337,6 @@
     -webkit-text-fill-color: transparent;
   }
 
-  /* خط سناب شات */
   .font-snap {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 15px;
@@ -310,7 +345,6 @@
     color: #1e293b;
   }
 
-  /* خط ثريدز */
   .font-threads {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 15px;
@@ -319,7 +353,6 @@
     color: #0f172a;
   }
 
-  /* خط VSCO */
   .font-vsco {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 14px;
@@ -328,84 +361,148 @@
     color: #334155;
   }
 
-  footer{
+  /* --- تنسيقات الفوتر والكبسة الجديدة --- */
+  footer {
     margin-top: 34px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     font-size: 12px;
     color: var(--muted);
   }
 
-  footer svg{
+  .footer-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .footer-name svg {
     width: 14px;
     height: 14px;
     stroke: var(--muted);
     fill: none;
   }
+
+  .promo-btn {
+    color: #38bdf8; /* لون أزرق سماوي متناسق مع الخلفية */
+    text-decoration: none;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 6px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    transition: all 0.3s ease;
+    font-size: 11px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .promo-btn:hover {
+    background: rgba(56, 189, 248, 0.2);
+    color: #ffffff;
+    border-color: #38bdf8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+  }
 </style>
 </head>
 <body>
 
-  <!-- خلفية البقع العائمة -->
-  <div class="ambient-bg">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+  <!-- تأثير الثلج -->
+  <div class="snow-container">
+    <div class="snowflake snow-1"></div>
+    <div class="snowflake snow-2"></div>
+    <div class="snowflake snow-3"></div>
+    <div class="snowflake snow-4"></div>
+    <div class="snowflake snow-5"></div>
+    <div class="snowflake snow-6"></div>
+    <div class="snowflake snow-7"></div>
+    <div class="snowflake snow-8"></div>
+    <div class="snowflake snow-9"></div>
+    <div class="snowflake snow-10"></div>
+    <div class="snowflake snow-11"></div>
+    <div class="snowflake snow-12"></div>
+    <div class="snowflake snow-13"></div>
+    <div class="snowflake snow-14"></div>
+    <div class="snowflake snow-15"></div>
+    <div class="snowflake snow-16"></div>
+    <div class="snowflake snow-17"></div>
+    <div class="snowflake snow-18"></div>
+    <div class="snowflake snow-19"></div>
+    <div class="snowflake snow-20"></div>
+    <div class="snowflake snow-21"></div>
+    <div class="snowflake snow-22"></div>
+    <div class="snowflake snow-23"></div>
+    <div class="snowflake snow-24"></div>
+    <div class="snowflake snow-25"></div>
   </div>
 
-  <div class="card">
-
-    <!-- الصورة الشخصية -->
-    <div class="avatar animate-item">
-      <img src="khalil_profile.jpeg" alt="الصورة الشخصية لخليل">
+  <div class="layout-container">
+    
+    <!-- القمر الواقعي -->
+    <div class="moon-container">
+      <div class="moon"></div>
     </div>
 
-    <h1 class="animate-item"> خليل </h1>
-    <p class="bio animate-item">صفحاتي :</p>
+    <!-- الكارد الرئيسي -->
+    <div class="card-container">
+      <div class="card">
+        <div class="avatar animate-item">
+          <img src="khalil_profile.jpeg" alt="الصورة الشخصية لخليل">
+        </div>
 
-    <div class="links">
+        <h1 class="animate-item"> خليل </h1>
+        <p class="bio animate-item">صفحاتي :</p>
 
-      <!-- انستغرام -->
-      <a class="link" href="https://instagram.com/khalil_aldraweesh" target="_blank" style="--brand:#c23fc9">
-        <span class="icon-wrap">
-          <svg viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1"/></svg>
-        </span>
-        <span class="link-text font-insta">Instagram</span>
-      </a>
+        <div class="links">
+          <!-- انستغرام -->
+          <a class="link" href="https://instagram.com/khalil_aldraweesh" target="_blank" style="--brand:#c23fc9">
+            <span class="icon-wrap">
+              <svg viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1"/></svg>
+            </span>
+            <span class="link-text font-insta">Instagram</span>
+          </a>
 
-      <!-- سناب شات -->
-      <a class="link" href="https://www.snapchat.com/add/khalil_aldrawee?share_id=Z9p--nUv0vs&locale=ar-JO" target="_blank" style="--brand:#d9b200">
-        <span class="icon-wrap">
-          <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 4c2.6 0 4.5 2 4.5 4.6 0 1.1-.1 2.1-.3 3 .8.5 1.8.7 1.8 1.4 0 .5-.6.8-1.4 1.1-.3.1-.5.4-.4.7.2.7.6 1.4 1.4 1.7.3.1.2.6-.1.6-.6.1-1 .2-1.2.4-.2.2-.1.7-.5 1-.5.4-1.6-.1-2.5.2-.7.3-1.2 1-2.3 1s-1.6-.7-2.3-1c-.9-.3-2 .2-2.5-.2-.4-.3-.3-.8-.5-1-.2-.2-.6-.3-1.2-.4-.3 0-.4-.5-.1-.6.8-.3 1.2-1 1.4-1.7.1-.3-.1-.6-.4-.7-.8-.3-1.4-.6-1.4-1.1 0-.7 1-.9 1.8-1.4-.2-.9-.3-1.9-.3-3C7.5 6 9.4 4 12 4z"/></svg>
-        </span>
-        <span class="link-text font-snap">Snapchat</span>
-      </a>
+          <!-- سناب شات -->
+          <a class="link" href="https://www.snapchat.com/add/khalil_aldrawee?share_id=Z9p--nUv0vs&locale=ar-JO" target="_blank" style="--brand:#d9b200">
+            <span class="icon-wrap">
+              <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 4c2.6 0 4.5 2 4.5 4.6 0 1.1-.1 2.1-.3 3 .8.5 1.8.7 1.8 1.4 0 .5-.6.8-1.4 1.1-.3.1-.5.4-.4.7.2.7.6 1.4 1.4 1.7.3.1.2.6-.1.6-.6.1-1 .2-1.2.4-.2.2-.1.7-.5 1-.5.4-1.6-.1-2.5.2-.7.3-1.2 1-2.3 1s-1.6-.7-2.3-1c-.9-.3-2 .2-2.5-.2-.4-.3-.3-.8-.5-1-.2-.2-.6-.3-1.2-.4-.3 0-.4-.5-.1-.6.8-.3 1.2-1 1.4-1.7.1-.3-.1-.6-.4-.7-.8-.3-1.4-.6-1.4-1.1 0-.7 1-.9 1.8-1.4-.2-.9-.3-1.9-.3-3C7.5 6 9.4 4 12 4z"/></svg>
+            </span>
+            <span class="link-text font-snap">Snapchat</span>
+          </a>
 
-      <!-- ثريدز -->
-      <a class="link" href="https://threads.net/@username" target="_blank" style="--brand:#1e293b">
-        <span class="icon-wrap">
-          <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 3c-4 0-6 2.6-6 6.5V14c0 4 2.3 7 6.3 7 3.4 0 5.2-1.8 5.6-4"/><path d="M9.5 11c0-2 1.3-3 3-3s3 1.2 3 3.2c0 3-2 3.6-3.8 3.6-1.6 0-2.7-.9-2.7-2.2 0-1.5 1.4-2.1 3-2.1 1.1 0 2.2.3 3 .8"/></svg>
-        </span>
-        <span class="link-text font-threads">Threads</span>
-      </a>
+          <!-- ثريدز -->
+          <a class="link" href="https://threads.net/@username" target="_blank" style="--brand:#1e293b">
+            <span class="icon-wrap">
+              <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 3c-4 0-6 2.6-6 6.5V14c0 4 2.3 7 6.3 7 3.4 0 5.2-1.8 5.6-4"/><path d="M9.5 11c0-2 1.3-3 3-3s3 1.2 3 3.2c0 3-2 3.6-3.8 3.6-1.6 0-2.7-.9-2.7-2.2 0-1.5 1.4-2.1 3-2.1 1.1 0 2.2.3 3 .8"/></svg>
+            </span>
+            <span class="link-text font-threads">Threads</span>
+          </a>
 
-      <!-- VSCO -->
-      <a class="link" href="https://vsco.co/khalilaldraweesh" target="_blank" style="--brand:#334155">
-        <span class="icon-wrap">
-          <svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.3"/></svg>
-        </span>
-        <span class="link-text font-vsco">VSCO</span>
-      </a>
+          <!-- VSCO -->
+          <a class="link" href="https://vsco.co/khalilaldraweesh" target="_blank" style="--brand:#334155">
+            <span class="icon-wrap">
+              <svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.3"/></svg>
+            </span>
+            <span class="link-text font-vsco">VSCO</span>
+          </a>
+        </div>
 
+        <footer class="animate-item">
+          <div class="footer-name">
+            <svg viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 19h20l-1.5-2.5h-17z"/></svg>
+            من الخبير عدنان
+          </div>
+          <!-- الكبسة الجديدة الي بتودي على حسابك -->
+          <a href="https://instagram.com/3oam_7" target="_blank" class="promo-btn">
+            ( اذا بدك زيها اكبس هان )
+          </a>
+        </footer>
+      </div>
     </div>
-
-    <footer class="animate-item">
-      <svg viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 19h20l-1.5-2.5h-17z"/></svg>
-      من الخبير عدنان
-    </footer>
-
+    
   </div>
 
 </body>
