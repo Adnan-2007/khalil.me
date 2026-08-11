@@ -6,50 +6,143 @@
 <title>خليل</title>
 <style>
   :root{
-    --text: #10202e;
-    --muted: #3f6478;
-    --card: #ffffffcc;
-    --line: #ffffff90;
+    --text: #0f172a;
+    --muted: #64748b;
+    --card: rgba(255, 255, 255, 0.75);
+    --border: rgba(255, 255, 255, 0.8);
   }
 
   *{ box-sizing: border-box; margin:0; padding:0; }
 
   body{
-    /* متدرج: أبيض تحت -> سماوي فاتح فوق */
-    background: linear-gradient(to top, #ffffff 0%, #cdeeff 55%, #8fd3ff 100%);
     min-height: 100vh;
     color: var(--text);
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 32px 16px;
+    position: relative;
+    overflow-x: hidden;
+    background-color: #f8fafc;
   }
 
-  .card{
-    width:100%;
-    max-width: 380px;
-    text-align:center;
+  /* --- التأثير الثالث: خلفية البقع الملونة العائمة (Pastel Ambient Orbs) --- */
+  .ambient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
   }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.55;
+    animation: floatOrb 12s infinite alternate ease-in-out;
+  }
+
+  /* بقعة أرجوانية أعلى اليمين */
+  .orb-1 {
+    width: 280px;
+    height: 280px;
+    background: #c084fc;
+    top: -40px;
+    right: -40px;
+    animation-duration: 14s;
+  }
+
+  /* بقعة سماوية أسفل اليسار */
+  .orb-2 {
+    width: 320px;
+    height: 320px;
+    background: #38bdf8;
+    bottom: -60px;
+    left: -60px;
+    animation-duration: 18s;
+  }
+
+  /* بقعة وردية ناعمة بالمنتصف */
+  .orb-3 {
+    width: 220px;
+    height: 220px;
+    background: #f472b6;
+    top: 40%;
+    left: 20%;
+    animation-duration: 10s;
+  }
+
+  @keyframes floatOrb {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(35px, 45px) scale(1.12); }
+  }
+
+  /* --- الكارت الرئيسي (تصميم زجاجي شفاف ومبسط) --- */
+  .card{
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    background: var(--card);
+    padding: 32px 22px;
+    border-radius: 28px;
+    border: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05);
+  }
+
+  /* --- التأثير الثاني: انيميشن دخول العناصر بالدور (Staggered Entrance) --- */
+  .animate-item {
+    opacity: 0;
+    animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* توقيت التتابع */
+  .avatar { animation-delay: 0.1s; }
+  h1 { animation-delay: 0.2s; }
+  .bio { animation-delay: 0.28s; }
+  .link:nth-child(1) { animation-delay: 0.38s; }
+  .link:nth-child(2) { animation-delay: 0.48s; }
+  .link:nth-child(3) { animation-delay: 0.58s; }
+  .link:nth-child(4) { animation-delay: 0.68s; }
+  footer { animation-delay: 0.78s; }
 
   .avatar{
-    width: 116px;
-    height: 116px;
+    width: 112px;
+    height: 112px;
     border-radius: 50%;
     margin: 0 auto 18px;
-    background: #fff;
+    background: #ffffff;
     border: 3px solid #ffffff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    box-shadow: 0 8px 24px #4aa8dd44;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   }
 
   .avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   h1{
@@ -66,76 +159,65 @@
 
   .links{
     margin-top: 28px;
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
     gap: 12px;
   }
 
-  /* التعديل الجديد للتدرج على كل الكبسات */
+  /* --- تصميم الكبسات للتلفون (Touch Responsive) --- */
   .link{
-    /* حذف --tint الأصلي واستخدام تدرج */
-    --tint-start: color-mix(in srgb, var(--brand) 12%, #ffffff); /* أكثر بياضاً قليلاً كبداية */
-    --tint-end: color-mix(in srgb, var(--brand) 32%, #ffffff); /* فاتح كإنهاء */
-    display:flex;
-    align-items:center;
+    display: flex;
+    align-items: center;
     gap: 14px;
-    /* تطبيق التدرج */
-    background: linear-gradient(135deg, var(--tint-start) 0%, var(--tint-end) 100%);
-    border: 1px solid var(--tint-end); /* جعل الحدود بلون النهاية الفاتح */
-    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid color-mix(in srgb, var(--brand) 25%, #e2e8f0);
+    border-radius: 16px;
     padding: 14px 18px;
-    text-decoration:none;
+    text-decoration: none;
     color: var(--text);
     font-size: 14.5px;
     font-weight: 600;
-    transition: transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease;
   }
 
   .link:hover{
-    /* جعل التدرج يميل أكثر لداكن عند التحويم */
-    background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 16%, #ffffff) 0%, color-mix(in srgb, var(--brand) 40%, #ffffff) 100%);
-    border-color: color-mix(in srgb, var(--brand) 40%, #ffffff);
-    box-shadow: 0 6px 18px color-mix(in srgb, var(--brand) 30%, transparent);
+    transform: translateY(-2px);
+    background: #ffffff;
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--brand) 18%, transparent);
   }
 
+  /* استجابة سلسة للمس على شاشة التلفون */
   .link:active{
-    transform: scale(1.05);
-    /* تغيير التدرج بشكل أكثر وضوحاً عند النقر */
-    background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 20%, #ffffff) 0%, color-mix(in srgb, var(--brand) 50%, #ffffff) 100%);
-    border-color: color-mix(in srgb, var(--brand) 50%, #ffffff);
-    box-shadow: 0 0 22px color-mix(in srgb, var(--brand) 55%, transparent);
+    transform: scale(0.96);
+    background: color-mix(in srgb, var(--brand) 10%, #ffffff);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--brand) 25%, transparent);
   }
 
   .icon-wrap{
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    /* تطبيق تدرج مماثل على الأيقونة الدائرية، من أسفل لأعلى */
-    background: linear-gradient(to top, var(--tint-start) 0%, var(--tint-end) 100%);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-shrink:0;
-    transition: background .2s ease;
-  }
-
-  .link:active .icon-wrap{
-    /* تغيير تدرج الأيقونة عند النقر */
-    background: linear-gradient(to top, color-mix(in srgb, var(--brand) 16%, #ffffff) 0%, color-mix(in srgb, var(--brand) 45%, #ffffff) 100%);
+    background: color-mix(in srgb, var(--brand) 12%, #ffffff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
   }
 
   .icon-wrap svg{
     width: 18px;
     height: 18px;
-    stroke: var(--brand); /* الحفاظ على لون الأيقونة */
+    stroke: var(--brand);
     fill: none;
   }
 
   footer{
     margin-top: 34px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 6px;
     font-size: 12px;
     color: var(--muted);
@@ -145,50 +227,57 @@
     width: 14px;
     height: 14px;
     stroke: var(--muted);
-    fill:none;
+    fill: none;
   }
 </style>
 </head>
 <body>
 
+  <!-- خلفية البقع العائمة -->
+  <div class="ambient-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
   <div class="card">
 
-    <!-- الصورة الشخصية المعدلة: يجب رفع الصورة المرفقة باسم khalil_profile.jpeg بجوار ملف HTML -->
-    <div class="avatar">
+    <!-- الصورة الشخصية -->
+    <div class="avatar animate-item">
       <img src="khalil_profile.jpeg" alt="الصورة الشخصية لخليل">
     </div>
 
-    <h1> خليل </h1>
-    <p class="bio">صفحاتي :</p>
+    <h1 class="animate-item"> خليل </h1>
+    <p class="bio animate-item">صفحاتي :</p>
 
     <div class="links">
 
-      <!-- انستغرام: لون متدرج البراند تقريبي (بنفسجي-برتقالي) -->
-      <a class="link" href="https://instagram.com/khalil_aldraweesh" target="_blank" style="--brand:#c23fc9">
+      <!-- انستغرام -->
+      <a class="link animate-item" href="https://instagram.com/khalil_aldraweesh" target="_blank" style="--brand:#c23fc9">
         <span class="icon-wrap">
           <svg viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1"/></svg>
         </span>
         انستغرام
       </a>
 
-      <!-- سناب شات: أصفر البراند -->
-      <a class="link" href="https://www.snapchat.com/add/khalil_aldrawee?share_id=Z9p--nUv0vs&locale=ar-JO" target="_blank" style="--brand:#c9a400">
+      <!-- سناب شات -->
+      <a class="link animate-item" href="https://www.snapchat.com/add/khalil_aldrawee?share_id=Z9p--nUv0vs&locale=ar-JO" target="_blank" style="--brand:#d9b200">
         <span class="icon-wrap">
           <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 4c2.6 0 4.5 2 4.5 4.6 0 1.1-.1 2.1-.3 3 .8.5 1.8.7 1.8 1.4 0 .5-.6.8-1.4 1.1-.3.1-.5.4-.4.7.2.7.6 1.4 1.4 1.7.3.1.2.6-.1.6-.6.1-1 .2-1.2.4-.2.2-.1.7-.5 1-.5.4-1.6-.1-2.5.2-.7.3-1.2 1-2.3 1s-1.6-.7-2.3-1c-.9-.3-2 .2-2.5-.2-.4-.3-.3-.8-.5-1-.2-.2-.6-.3-1.2-.4-.3 0-.4-.5-.1-.6.8-.3 1.2-1 1.4-1.7.1-.3-.1-.6-.4-.7-.8-.3-1.4-.6-1.4-1.1 0-.7 1-.9 1.8-1.4-.2-.9-.3-1.9-.3-3C7.5 6 9.4 4 12 4z"/></svg>
         </span>
         سناب شات
       </a>
 
-      <!-- ثريدز: أسود/رمادي غامق -->
-      <a class="link" href="https://threads.net/@username" target="_blank" style="--brand:#3a3a3a">
+      <!-- ثريدز -->
+      <a class="link animate-item" href="https://threads.net/@username" target="_blank" style="--brand:#1e293b">
         <span class="icon-wrap">
           <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 3c-4 0-6 2.6-6 6.5V14c0 4 2.3 7 6.3 7 3.4 0 5.2-1.8 5.6-4"/><path d="M9.5 11c0-2 1.3-3 3-3s3 1.2 3 3.2c0 3-2 3.6-3.8 3.6-1.6 0-2.7-.9-2.7-2.2 0-1.5 1.4-2.1 3-2.1 1.1 0 2.2.3 3 .8"/></svg>
         </span>
         ثريدز
       </a>
 
-      <!-- VSCO: أزرق غامق مائل للرمادي (لون تطبيق VSCO) -->
-      <a class="link" href="https://vsco.co/khalilaldraweesh" target="_blank" style="--brand:#2b3a4a">
+      <!-- VSCO -->
+      <a class="link animate-item" href="https://vsco.co/khalilaldraweesh" target="_blank" style="--brand:#334155">
         <span class="icon-wrap">
           <svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.3"/></svg>
         </span>
@@ -197,7 +286,7 @@
 
     </div>
 
-    <footer>
+    <footer class="animate-item">
       <svg viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 19h20l-1.5-2.5h-17z"/></svg>
       من الخبير عدنان
     </footer>
